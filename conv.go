@@ -15,6 +15,7 @@ type Stringer interface {
 
 var stringerType = reflect.TypeOf((*Stringer)(nil)).Elem()
 
+
 func toFloat64(x interface{}) float64 {
 	if v, ok := x.(float32); ok {
 		return float64(v)
@@ -97,6 +98,8 @@ func toIterable(i interface{}) <-chan Item {
 
 		switch v := reflect.ValueOf(i); t.Kind() {
 		case reflect.Map:
+			// 如果是map类型
+			// 先判断key是否可以哈希
 			// The map key must be a hashable key type.
 			if !isKeyType(t.Key()) {
 				break
@@ -106,21 +109,26 @@ func toIterable(i interface{}) <-chan Item {
 			}
 
 		case reflect.Chan:
+			// 如果是chan类型
 		L:
 			for {
 				x, ok := v.Recv()
 				if !ok {
 					break L
 				}
+				// key为什么值？
 				ci <- Item{Value: x.Interface()}
 			}
 
 		case reflect.Array, reflect.Slice:
+			// 如果是数组或切片
+			// 可以使用索引值
 			for j := 0; j < v.Len(); j++ {
 				ci <- Item{Key: j, Value: v.Index(j).Interface()}
 			}
 
 		default:
+			// 默认情况没有索引值
 			ci <- Item{Value: v.Interface()}
 		}
 	}()

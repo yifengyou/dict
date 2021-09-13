@@ -21,8 +21,11 @@ func (d *Dict) Len() int { return d.size }
 // New returns a new Dict object.
 // vargs can be any Go basic type, slices, and maps. The keys in a map are
 // used as keys in the dict. The map keys must be hashable.
+// map的key必须支持序列化
+// 支持切片和map
 func New(vargs ...interface{}) *Dict {
 	d := &Dict{values: make(map[uint64]interface{})}
+	// 关键在于Update
 	d.Update(vargs...)
 	return d
 }
@@ -221,26 +224,33 @@ func (d *Dict) Items() <-chan Item {
 // any existing values that match the keys. This func is used by New() when initializing a
 // dict with values.
 // Returns true if any changes were made.
+// vargs必须为切片或map类型
 func (d *Dict) Update(vargs ...interface{}) bool {
 	if vargs == nil {
 		return false
 	}
+	// New()则初始化为零值，int类型
 	ver := d.Version()
 	for i := range vargs {
-		// other dict
+		// 遍历vargs,i为从0开始的序列
+		// 如果是用其他字典拼接，则依次添加
 		if other, ok := vargs[i].(*Dict); ok {
+			// 支持多个dict拼接，单个拼接仍是一个for循环，依次迭代
 			for item := range other.Items() {
 				d.Set(item.Key, item.Value)
 			}
 			continue
 		}
-		// iterables and scalars
+		// 如果是切片或map类型，iterables and scalars
+		// toIterable 为关键函数，将类型转为dict
 		for item := range toIterable(vargs[i]) {
 			if item.Key == nil {
+				// 如果key不存在，则用大小来表示
 				item.Key = d.size
 			}
 			d.Set(item.Key, item.Value)
 		}
 	}
+	// 返回是否更新
 	return ver != d.Version()
 }

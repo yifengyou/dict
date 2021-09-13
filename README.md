@@ -113,7 +113,6 @@ func main() {
 		fmt.Println("VIN:", item.Key)
 	}
 }
-
 ```
 
 ## go-dict与python dict对照
@@ -136,9 +135,16 @@ func main() {
 
 ## 基本原理
 
-![20210913_105932_97](image/20210913_105932_97.png) 
+![20210913_105932_97](image/20210913_105932_97.png)
+
+* 将map中的key、value拆分放入构造的dict结构中
+* 需要反射
 
 ## 参考
 
-[1]: <https://docs.python.org/3.7/library/stdtypes.html#mapping-types-dict>
-[2]: <https://github.com/srfrog/dict/blob/master/example_test.go>
+* <https://docs.python.org/3.7/library/stdtypes.html#mapping-types-dict>
+* <https://github.com/srfrog/dict/blob/master/example_test.go>
+
+
+
+---
