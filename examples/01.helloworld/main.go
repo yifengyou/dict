@@ -36,6 +36,7 @@ func main() {
 	d := dict.New(vins)
 
 	// Add a couple more VINs.
+	// func (d *Dict) Set(key, value interface{}) *Dict
 	d.Set("1N4AL2AP4BN404580", &Car{
 		Model:   "2011 NISSAN ALTIMA 2.5 S CVT",
 		BrandID: "003096EE-C8FC-4C2F-ADEF-406F86C1F70B",
@@ -48,9 +49,11 @@ func main() {
 	})
 
 	// Check current total
+	// func (d *Dict) Len() int
 	fmt.Println("Total VIN Count:", d.Len())
 
 	// Print VINs that have 3 or more recalls
+	// func (d *Dict) Items() <-chan Item
 	for item := range d.Items() {
 		car, ok := item.Value.(*Car)
 		if !ok {

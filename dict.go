@@ -198,6 +198,7 @@ func (d *Dict) Values() []interface{} {
 
 // Items returns a channel of key-value items, or nil if the dict is empty.
 func (d *Dict) Items() <-chan Item {
+	// 无缓冲chan
 	ci := make(chan Item)
 
 	go func() {

@@ -1,17 +1,17 @@
-# go-dict
-
-原始仓库地址：<https://github.com/srfrog/dict>
+# Dict
+[![GoDoc](https://godoc.org/github.com/srfrog/dict?status.svg)](https://godoc.org/github.com/srfrog/dict)
+[![Go Report Card](https://goreportcard.com/badge/github.com/srfrog/dict?svg=1)](https://goreportcard.com/report/github.com/srfrog/dict)
+[![Coverage Status](https://coveralls.io/repos/github/srfrog/dict/badge.svg?branch=master)](https://coveralls.io/github/srfrog/dict?branch=master)
+[![Build Status](https://travis-ci.com/srfrog/dict.svg?branch=master)](https://travis-ci.com/srfrog/dict)
 
 *Python dictionary data type (dict) in Go*
-
-Go 实现 python dict 数据类型
 
 Package dict is a Go implementation of Python [dict][1], which are hashable object maps.
 Dictionaries complement Go map and slice types to provide a simple interface to
 store and access key-value data with relatively fast performance at the cost of extra
 memory. This is done by using the features of both maps and slices.
 
-## 安装指引
+## Quick Start
 
 Install using "go get":
 
@@ -23,7 +23,7 @@ Then import from your source:
 
 View [example_test.go][2] for an extended example of basic usage and features.
 
-## 特性
+## Features
 
 - [x] Initialize a new dict with scalars, slices, maps, channels and other dictionaries.
 - [x] Go types int, uint, float, string and fmt.Stringer are hashable for dict keys.
@@ -34,7 +34,7 @@ View [example_test.go][2] for an extended example of basic usage and features.
 - [ ] sql.Scanner support via optional sub-package (WIP)
 - [ ] Plenty of tests and examples to get you started quickly (WIP)
 
-## 文档
+## Documentation
 
 The full code documentation is located at GoDoc:
 
@@ -42,7 +42,7 @@ The full code documentation is located at GoDoc:
 
 The source code is thoroughly commented, have a look.
 
-## 最简单的使用方式
+## Usage
 
 Minimal example showing basic usage:
 
@@ -116,29 +116,5 @@ func main() {
 
 ```
 
-## go-dict与python dict对照
-
-
-| 序号 | 功能                                                                                     | python dictgo-dict                 | go-dict      |
-| ---- | ---------------------------------------------------------------------------------------- | ---------------------------------- | ------------ |
-| 1    | 删除字典内所有元素                                                                       | dict.clear()                       | dict.Clear() |
-| 2    | 返回一个字典的浅复制                                                                     | dict.copy()                        |              |
-| 3    | 创建一个新字典，以序列 seq 中元素做字典的键，val 为字典所有键对应的初始值                | dict.fromkeys(seq[, val])          |              |
-| 4    | 返回指定键的值，如果值不在字典中返回default值                                            | dict.get(key, default=None)        |              |
-| 5    | 如果键在字典dict里返回true，否则返回false                                                | dict.has_key(key)                  |              |
-| 6    | 以列表返回可遍历的(键, 值) 元组数组                                                      | dict.items()                       |              |
-| 7    | 以列表返回一个字典所有的键                                                               | dict.keys()                        |              |
-| 8    | 和get()类似, 但如果键不存在于字典中，将会添加键并将值设为default                         | dict.setdefault(key, default=None) |              |
-| 9    | 把字典dict2的键/值对更新到dict里                                                         | dict.update(dict2)                 |              |
-| 10   | 以列表返回字典中的所有值                                                                 | dict.values()                      |              |
-| 11   | 删除字典给定键 key 所对应的值，返回值为被删除的值。key值必须给出。 否则，返回default值。 | pop(key[,default])                 |              |
-| 12   | 返回并删除字典中的最后一对键和值。                                                       | popitem()                          |              |
-
-## 基本原理
-
-![20210913_105932_97](image/20210913_105932_97.png) 
-
-## 参考
-
-[1]: <https://docs.python.org/3.7/library/stdtypes.html#mapping-types-dict>
-[2]: <https://github.com/srfrog/dict/blob/master/example_test.go>
+[1]: https://docs.python.org/3.7/library/stdtypes.html#dict
+[2]: https://github.com/srfrog/dict/blob/master/example_test.go
