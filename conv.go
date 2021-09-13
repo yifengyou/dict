@@ -13,6 +13,7 @@ type Stringer interface {
 	String() string
 }
 
+// Elem returns a type's element type.
 var stringerType = reflect.TypeOf((*Stringer)(nil)).Elem()
 
 
@@ -96,6 +97,7 @@ func toIterable(i interface{}) <-chan Item {
 			return
 		}
 
+		// ValueOf获取值对象，不包括具体值类型，因此再Kind操作
 		switch v := reflect.ValueOf(i); t.Kind() {
 		case reflect.Map:
 			// 如果是map类型

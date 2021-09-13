@@ -43,10 +43,12 @@ func (d *Dict) Set(key, value interface{}) *Dict {
 		return d
 	}
 
+	// 如果k.ID已经存在
 	if _, ok := d.values[k.ID]; ok {
 		d.values[k.ID] = value
 		return d
 	}
+	// 如果不存在，则新建
 	d.keys = append(d.keys, k)
 	d.values[k.ID] = value
 	d.size++
@@ -59,13 +61,16 @@ func (d *Dict) Set(key, value interface{}) *Dict {
 // default value if no item is found.
 // Returns a value matching key in dict, otherwise nil or alt if given.
 func (d *Dict) Get(key interface{}, alt ...interface{}) interface{} {
+	// 判断是否为空
 	if d.IsEmpty() {
 		return nil
 	}
+	// 根据key获取ID
 	h, ok := d.GetKeyID(key)
 	if ok {
 		return d.values[h]
 	}
+	// 如果有默认值，则返回默认值
 	if alt != nil {
 		return alt[0]
 	}
@@ -93,11 +98,13 @@ func (d *Dict) deleteItem(idx int) {
 
 	delete(d.values, d.keys[idx].ID)
 	copy(d.keys[idx:], d.keys[idx+1:])
+
 	l := len(d.keys)
+	// 最后一个元素置空
 	d.keys[l-1] = nil
 	d.keys = d.keys[:l-1]
 	d.size = l
-	d.version++
+	d.version++ // 每次变动，version都要+1
 }
 
 // Del removes an item from dict by key name.
